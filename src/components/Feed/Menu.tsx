@@ -13,8 +13,7 @@ export default function Menu({ onClick }: MenuProps) {
   let menuRef = useRef<HTMLDivElement>(null);
 
 
-  useEffect(() => {
-   
+  useEffect(() => {   
     if (openConfirmation) {
       document.body.classList.add("modal-overlay");
     } else {

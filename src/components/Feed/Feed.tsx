@@ -29,7 +29,7 @@ export default function Feed() {
     isLoading,
     error,
     mutate,
-  } = useSWR(`/api/getTweets`, fetcher, {
+  } = useSWR("/api/getTweets", fetcher, {
     refreshInterval: 0,
     dedupingInterval: 0,
     revalidateOnFocus: false,
@@ -63,7 +63,7 @@ export default function Feed() {
 
   const addNewTweet = async (newTweet: AddTweet) => {
     setApiIsLoading(true);
-    const add = toast.loading("Adding new Tweet...", { duration: 1000 });
+    toast.success("New Tweet!", { duration: 1000 });
     try {
       const response = await fetch(`/api/addTweet`, {
         method: "post",
@@ -79,13 +79,12 @@ export default function Feed() {
     } catch (error) {
       console.error(`[Feed.tsx] Failed to add tweet: ${error}`);
     } finally {
-      toast.success("", { id: add, duration: 1000 });
       setApiIsLoading(false);
     }
   };
 
   const deleteTweet = async (id: string) => {
-    const del = toast.loading("Deleting Tweet...", { duration: 1000 });
+    setApiIsLoading(true);
     try {
       const response = await fetch(`/api/deleteTweet`, {
         method: "post",
@@ -96,12 +95,15 @@ export default function Feed() {
       });
 
       if (response.ok) {
+        toast.success("Tweet deleted successfully!", { duration: 1000 });
         mutate();
+      } else {
+        toast.error("Failed to delete tweet.", { duration: 1000 });
       }
     } catch (error) {
       console.error(`[Feed.tsx] Failed to delete tweet: ${error}`);
     } finally {
-      toast.success("", { id: del, duration: 1000 });
+      setApiIsLoading(false);
     }
   };
 
