@@ -67,8 +67,7 @@ export default function TweetBox({ addNewTweet, apiIsLoading }: TweetBoxProps) {
 
             <button
               onClick={handleSubmit}
-              // disabled={!input || !session}
-              disabled={!input}
+              disabled={apiIsLoading || !session || !input}
               className="px-5 py-2 font-bold text-white rounded-full bg-twitter disabled:opacity-40"
             >
               Tweet
