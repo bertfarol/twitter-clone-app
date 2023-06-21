@@ -10,7 +10,6 @@ import { toast } from "react-hot-toast";
 import SkeletonLoader from "./SkeletonLoader";
 import sanity from "../../../sanity/lib/client-config";
 
-
 const fetcher = (url: RequestInfo | URL) =>
   fetch(url).then((res) => res.json());
 
@@ -64,7 +63,7 @@ export default function Feed() {
 
   const addNewTweet = async (newTweet: AddTweet) => {
     setApiIsLoading(true);
-    const add = toast.loading("Adding new Tweet...", {duration: 1000});
+    const add = toast.loading("Adding new Tweet...", { duration: 1000 });
     try {
       const response = await fetch(`/api/addTweet`, {
         method: "post",
@@ -80,7 +79,7 @@ export default function Feed() {
     } catch (error) {
       console.error(`[Feed.tsx] Failed to add tweet: ${error}`);
     } finally {
-      toast.success("Successfully added!.", { id: add, duration: 1000 });
+      toast.success("", { id: add, duration: 1000 });
       setApiIsLoading(false);
     }
   };
@@ -102,7 +101,7 @@ export default function Feed() {
     } catch (error) {
       console.error(`[Feed.tsx] Failed to delete tweet: ${error}`);
     } finally {
-      toast.success("Successfully deleted!.", { id: del, duration: 1000 });
+      toast.success("", { id: del, duration: 1000 });
     }
   };
 
