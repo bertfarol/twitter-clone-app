@@ -8,15 +8,11 @@ import autoAnimate from "@formkit/auto-animate";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import SkeletonLoader from "./SkeletonLoader";
-import { createClient } from "@sanity/client";
+import sanity from "../../../sanity/lib/client-config";
+
 
 const fetcher = (url: RequestInfo | URL) =>
   fetch(url).then((res) => res.json());
-
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-});
 
 export default function Feed() {
   const [apiIsLoading, setApiIsLoading] = useState(false); // disable input text when api is fetching (adding/deleting)
@@ -50,7 +46,7 @@ export default function Feed() {
   useEffect(() => {
     const tweetQuery = '*[_type == "tweet"]';
 
-    const tweetSubscription = client.listen(tweetQuery).subscribe((update) => {
+    const tweetSubscription = sanity.listen(tweetQuery).subscribe((update) => {
       const tweets: any = update.result;
       mutate();
       if (tweets) {
@@ -68,7 +64,7 @@ export default function Feed() {
 
   const addNewTweet = async (newTweet: AddTweet) => {
     setApiIsLoading(true);
-    const add = toast.loading("Adding new Tweet...");
+    const add = toast.loading("Adding new Tweet...", {duration: 1000});
     try {
       const response = await fetch(`/api/addTweet`, {
         method: "post",
@@ -84,13 +80,13 @@ export default function Feed() {
     } catch (error) {
       console.error(`[Feed.tsx] Failed to add tweet: ${error}`);
     } finally {
-      toast.success("Successfully added!.", { id: add });
+      toast.success("Successfully added!.", { id: add, duration: 1000 });
       setApiIsLoading(false);
     }
   };
 
   const deleteTweet = async (id: string) => {
-    const del = toast.loading("Deleting Tweet...");
+    const del = toast.loading("Deleting Tweet...", { duration: 1000 });
     try {
       const response = await fetch(`/api/deleteTweet`, {
         method: "post",
@@ -106,7 +102,7 @@ export default function Feed() {
     } catch (error) {
       console.error(`[Feed.tsx] Failed to delete tweet: ${error}`);
     } finally {
-      toast.success("Successfully deleted!.", { id: del });
+      toast.success("Successfully deleted!.", { id: del, duration: 1000 });
     }
   };
 
