@@ -7,7 +7,6 @@ import {
 } from "@heroicons/react/outline";
 import { TweetAPI } from "../../types/tweetAPI";
 
-
 interface TweetProps {
   tweet: TweetAPI;
 }
@@ -37,11 +36,13 @@ export default function Tweet({ tweet }: TweetProps) {
           </div>
           <p>{tweet.text}</p>
           {tweet.image && (
-            <img
-              src={tweet.image}
-              alt=""
-              className="object-cover w-full m-2.5 mb-1 ml-0 rounded-lg shadow-sm"
-            />
+            <div className="h-[350px]">
+              <img
+                src={tweet.image}
+                alt=""
+                className="object-contain h-full object-top m-2.5 mb-1 ml-0 rounded-lg shadow-sm"
+              />
+            </div>
           )}
 
           <div className="flex justify-between max-w-[425px] pt-3 select-none">
