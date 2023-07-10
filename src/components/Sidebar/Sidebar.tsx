@@ -41,17 +41,21 @@ export default function Sidebar() {
             src="https://links.papareact.com/drq"
             alt=""
           />
-          <SidebarMenu Icon={HomeIcon} title="Home" />
-          <SidebarMenu Icon={HashtagIcon} title="Explore" />
-          <SidebarMenu Icon={BellIcon} title="Notification" />
-          <SidebarMenu Icon={MailIcon} title="Messages" />
-          <SidebarMenu Icon={BookmarkIcon} title="Bookmarks" />
+          <SidebarMenu disable={true} Icon={HomeIcon} title="Home" />
+          <SidebarMenu disable={true} Icon={HashtagIcon} title="Explore" />
+          <SidebarMenu disable={true} Icon={BellIcon} title="Notification" />
+          <SidebarMenu disable={true} Icon={MailIcon} title="Messages" />
+          <SidebarMenu disable={true} Icon={BookmarkIcon} title="Bookmarks" />
           <SidebarMenu
             onClick={session ? signOut : signIn}
             Icon={UserIcon}
             title={session ? "Sign out" : "Sign in"}
           />
-          <SidebarMenu Icon={DotsCircleHorizontalIcon} title="More" />
+          <SidebarMenu
+            disable={true}
+            Icon={DotsCircleHorizontalIcon}
+            title="More"
+          />
         </div>
         {session && (
           <div className="relative" ref={logoutRef}>
@@ -80,10 +84,14 @@ export default function Sidebar() {
 
             {logoutBoxOpen && (
               <div className="absolute drop-shadow-lg bg-white px-3.5 py-2 top-[-47px] left-2/4 translate-x-[-50%] rounded-lg	hover:bg-zinc-100 cursor-pointer w-48">
-                <div className="font-bold" onClick={() => {
-                  session ? signOut : signIn;
-                }}>
-                  Log out @{session?.user?.name?.replace(/\s+/g, "").toLowerCase()}
+                <div
+                  className="font-bold"
+                  onClick={() => {
+                    session ? signOut : signIn;
+                  }}
+                >
+                  Log out @
+                  {session?.user?.name?.replace(/\s+/g, "").toLowerCase()}
                 </div>
               </div>
             )}
